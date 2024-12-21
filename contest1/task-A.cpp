@@ -1,4 +1,4 @@
-// 125683449 
+// 130505082
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -8,6 +8,43 @@ std::vector<std::vector<int>> Input(int n) {
     std::cin >> a[i][0] >> a[i][1];
   }
   return a;
+}
+void SamePatrOfCode(int& i, int& j, std::vector<std::vector<int>>& b, int& ib,
+                    std::vector<std::vector<int>>& pod1,
+                    std::vector<std::vector<int>>& pod2) {
+  ++ib;
+  if (i < int(pod1.size()) && j < int(pod2.size())) {
+    if (pod1[i][0] <= pod2[j][0]) {
+      b[ib] = pod1[i];
+      i += 1;
+    } else {
+      b[ib] = pod2[j];
+      j += 1;
+    }
+  } else {
+    if (i < int(pod1.size())) {
+      b[ib] = pod1[i];
+      i += 1;
+    } else {
+      b[ib] = pod2[j];
+      j += 1;
+    }
+  }
+}
+void AnotherPatrOfCode(int& i, int& j, std::vector<std::vector<int>>& b,
+                       int& ib, std::vector<std::vector<int>>& pod1,
+                       std::vector<std::vector<int>>& pod2) {
+  while (i < int(pod1.size()) || j < int(pod2.size())) {
+    if (i < int(pod1.size()) && b[ib][1] >= pod1[i][0]) {
+      b[ib][1] = std::max(b[ib][1], pod1[i][1]);
+      i++;
+    } else if (j < int(pod2.size()) && b[ib][1] >= pod2[j][0]) {
+      b[ib][1] = std::max(b[ib][1], pod2[j][1]);
+      j++;
+    } else {
+      SamePatrOfCode(i, j, b, ib, pod1, pod2);
+    }
+  }
 }
 std::vector<std::vector<int>> Marger(std::vector<std::vector<int>> pod1,
                                      std::vector<std::vector<int>> pod2,
@@ -23,34 +60,7 @@ std::vector<std::vector<int>> Marger(std::vector<std::vector<int>> pod1,
     b[0] = pod2[j];
     j += 1;
   }
-  while (i < int(pod1.size()) || j < int(pod2.size())) {
-    if (i < int(pod1.size()) && b[ib][1] >= pod1[i][0]) {
-      b[ib][1] = std::max(b[ib][1], pod1[i][1]);
-      i++;
-    } else if (j < int(pod2.size()) && b[ib][1] >= pod2[j][0]) {
-      b[ib][1] = std::max(b[ib][1], pod2[j][1]);
-      j++;
-    } else {
-      ib++;
-      if (i < int(pod1.size()) && j < int(pod2.size())) {
-        if (pod1[i][0] <= pod2[j][0]) {
-          b[ib] = pod1[i];
-          i += 1;
-        } else {
-          b[ib] = pod2[j];
-          j += 1;
-        }
-      } else {
-        if (i < int(pod1.size())) {
-          b[ib] = pod1[i];
-          i += 1;
-        } else {
-          b[ib] = pod2[j];
-          j += 1;
-        }
-      }
-    }
-  }
+  AnotherPatrOfCode(i, j, b, ib, pod1, pod2);
   return b;
 }
 std::vector<std::vector<int>> MargeSort(std::vector<std::vector<int>> a,
@@ -85,7 +95,7 @@ void Output(std::vector<std::vector<int>> b) {
     }
   }
 }
-int mainTaskA() {
+int main() {
   int n;
   std::cin >> n;
   std::vector<std::vector<int>> b = MargeSort(Input(n), n);
