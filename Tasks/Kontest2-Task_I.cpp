@@ -1,4 +1,4 @@
-// 131797318
+// 133451235
 #include <iostream>
 #include <vector>
 
@@ -7,6 +7,7 @@ struct Node {
   int indlbro = 0;
   int indrbro = 0;
 };
+
 int StupidMinus(std::vector<Node>& arr, int n, int& koli) {
   int ans = arr[arr[n + 1].indlbro].x;
   arr[arr[arr[n + 1].indlbro].indlbro].indrbro = n + 1;
@@ -14,6 +15,7 @@ int StupidMinus(std::vector<Node>& arr, int n, int& koli) {
   --koli;
   return ans;
 }
+
 void StupidPlus(std::vector<Node>& arr, int x, int& size, int& koli) {
   arr[size + 1].x = x;
   arr[arr[0].indrbro].indlbro = size + 1;
@@ -23,6 +25,7 @@ void StupidPlus(std::vector<Node>& arr, int x, int& size, int& koli) {
   ++size;
   ++koli;
 }
+
 int Minus(std::vector<Node>& arr, int& koli) {
   int ans;
   ans = arr[arr[0].indrbro].x;
@@ -31,6 +34,7 @@ int Minus(std::vector<Node>& arr, int& koli) {
   --koli;
   return ans;
 }
+
 void Plus(std::vector<Node>& arr, int x, int& size, int n, int& koli) {
   arr[size + 1].x = x;
   arr[size + 1].indrbro = n + 1;
@@ -40,8 +44,9 @@ void Plus(std::vector<Node>& arr, int x, int& size, int n, int& koli) {
   ++size;
   ++koli;
 }
-void Perepodves(std::vector<Node>& arr1, int& kol1, std::vector<Node>& arr2,
-                std::vector<int>& size, int n, int& kol2) {
+
+void ReHang(std::vector<Node>& arr1, int& kol1, std::vector<Node>& arr2,
+            std::vector<int>& size, int n, int& kol2) {
   while (kol2 > kol1 && kol1 != kol2 && kol1 != kol2 + 1) {
     Plus(arr1, Minus(arr2, kol2), size[0], n, kol1);
   }
@@ -51,6 +56,7 @@ void Perepodves(std::vector<Node>& arr1, int& kol1, std::vector<Node>& arr2,
     }
   }
 }
+
 void Body(int n) {
   std::vector<Node> arr1(n + 2);
   std::vector<Node> arr2(n + 2);
@@ -68,17 +74,18 @@ void Body(int n) {
     if (c == '+') {
       std::cin >> x;
       Plus(arr2, x, size[1], n, kol2);
-      Perepodves(arr1, kol1, arr2, size, n, kol2);
+      ReHang(arr1, kol1, arr2, size, n, kol2);
     } else if (c == '*') {
       std::cin >> x;
       Plus(arr1, x, size[0], n, kol1);
-      Perepodves(arr1, kol1, arr2, size, n, kol2);
+      ReHang(arr1, kol1, arr2, size, n, kol2);
     } else if (c == '-') {
       std::cout << Minus(arr1, kol1) << "\n";
-      Perepodves(arr1, kol1, arr2, size, n, kol2);
+      ReHang(arr1, kol1, arr2, size, n, kol2);
     }
   }
 }
+
 int main() {
   int n;
   std::cin >> n;
