@@ -1,4 +1,4 @@
-// 131033662
+// 133450830
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -13,6 +13,7 @@ void StupidSort(std::vector<std::pair<int, int>>& nums, int n) {
     }
   }
 }
+
 int Findlen(int l, int r) {
   int i = 2;
   int kol = 1;
@@ -22,6 +23,7 @@ int Findlen(int l, int r) {
   }
   return kol - 1;
 }
+
 std::pair<int, int> GetPair(std::pair<int, int> l, std::pair<int, int> r,
                             std::vector<int>& num) {
   std::pair<int, int> ans;
@@ -42,11 +44,13 @@ std::pair<int, int> GetPair(std::pair<int, int> l, std::pair<int, int> r,
   ans.second = indexes[1].second;
   return ans;
 }
+
 void Inputs(int n, std::vector<int>& nums) {
   for (int i = 0; i < n; ++i) {
     std::cin >> nums[i];
   }
 }
+
 std::vector<std::vector<std::pair<int, int>>> Build(
     int n, std::vector<int>& nums,
     std::vector<std::vector<std::pair<int, int>>>& firandsec) {
@@ -68,6 +72,7 @@ std::vector<std::vector<std::pair<int, int>>> Build(
   }
   return firandsec;
 }
+
 void GetAns(int q, std::vector<std::vector<std::pair<int, int>>>& finders,
             std::vector<int>& num) {
   int l;
@@ -81,16 +86,7 @@ void GetAns(int q, std::vector<std::vector<std::pair<int, int>>>& finders,
         << "\n";
   }
 }
-void Print(std::vector<std::vector<std::pair<int, int>>> finders, int n) {
-  --n;
-  int m = int(log(n));
-  for (int i = 0; i < m + 2; ++i) {
-    for (int j = 0; j < n; ++j) {
-      std::cout << finders[i][j].first << " " << finders[i][j].second << "   ";
-    }
-    std::cout << "\n";
-  }
-}
+
 int main() {
   int n;
   int q;
@@ -100,6 +96,5 @@ int main() {
   std::vector<std::vector<std::pair<int, int>>> finders(
       (int(log2(n)) + 1), std::vector<std::pair<int, int>>(n));
   finders = Build(n, nums, finders);
-  // Print(finders, n);
   GetAns(q, finders, nums);
 }
