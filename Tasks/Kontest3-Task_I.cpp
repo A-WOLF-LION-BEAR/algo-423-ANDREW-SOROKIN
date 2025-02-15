@@ -1,4 +1,4 @@
-// 131851538
+// 133450406
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -9,6 +9,7 @@ struct Node {
   int l = -1;
   int r = -1;
 };
+
 int GetLen(int n) {
   int i = 1;
   while (i < n) {
@@ -16,28 +17,30 @@ int GetLen(int n) {
   }
   return i;
 }
+
 std::vector<int> Merge(int l, std::vector<int>& a, int r, std::vector<int>& b) {
   std::pair<int, int> lens = {l, r};
-  std::vector<int> i_have_an_apple_i_have_a_pen_uh_appelpen;
+  std::vector<int> new_array;
   while (l > 0 || r > 0) {
     if (l == 0) {
-      i_have_an_apple_i_have_a_pen_uh_appelpen.push_back(b[lens.second - r]);
+      new_array.push_back(b[lens.second - r]);
       --r;
     } else if (r == 0) {
-      i_have_an_apple_i_have_a_pen_uh_appelpen.push_back(a[lens.first - l]);
+      new_array.push_back(a[lens.first - l]);
       --l;
     } else {
       if (b[lens.second - r] > a[lens.first - l]) {
-        i_have_an_apple_i_have_a_pen_uh_appelpen.push_back(a[lens.first - l]);
+        new_array.push_back(a[lens.first - l]);
         --l;
       } else {
-        i_have_an_apple_i_have_a_pen_uh_appelpen.push_back(b[lens.second - r]);
+        new_array.push_back(b[lens.second - r]);
         --r;
       }
     }
   }
-  return i_have_an_apple_i_have_a_pen_uh_appelpen;
+  return new_array;
 }
+
 std::vector<Node> Build(int n, int len) {
   std::vector<Node> tree(len * 2);
   int x;
@@ -57,6 +60,7 @@ std::vector<Node> Build(int n, int len) {
   }
   return tree;
 }
+
 int BinFind(std::vector<int>& array, int x, int len) {
   int l = -1;
   int r = len;
@@ -71,6 +75,7 @@ int BinFind(std::vector<int>& array, int x, int len) {
   }
   return (mid % 2 == 1 ? l + 1 : (mid == r ? mid : mid + 1));
 }
+
 int Find(std::vector<Node>& tree, int r, int x, int len) {
   int i = 0;
   int ans = 0;
@@ -89,6 +94,7 @@ int Find(std::vector<Node>& tree, int r, int x, int len) {
   }
   return ans;
 }
+
 void GetAns(int q, int len, std::vector<Node>& tree) {
   int x;
   int y;
@@ -101,6 +107,7 @@ void GetAns(int q, int len, std::vector<Node>& tree) {
     std::cout << koly - kolx << "\n";
   }
 }
+
 int main() {
   int n;
   int q;
