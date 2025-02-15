@@ -1,4 +1,4 @@
-// 131803960
+// 133451327
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,6 +9,7 @@ struct Node {
   int rbro = 0;
   int min = -1;
 };
+
 void Plus(std::vector<Node>& och, int x, int& size, int n, int& kol) {
   och[size + 1].x = x;
   och[size + 1].rbro = n + 1;
@@ -21,6 +22,7 @@ void Plus(std::vector<Node>& och, int x, int& size, int n, int& kol) {
   ++size;
   ++kol;
 }
+
 int Delet(std::vector<Node>& och, int n, int& kol) {
   --kol;
   int ans = och[och[n + 1].lbro].x;
@@ -28,12 +30,14 @@ int Delet(std::vector<Node>& och, int n, int& kol) {
   och[n + 1].lbro = och[och[n + 1].lbro].lbro;
   return ans;
 }
+
 void Skid(std::vector<Node>& nach, std::vector<Node>& kon,
           std::vector<int>& size, std::vector<int>& kol, int n) {
   while (kol[0] > 0) {
     Plus(kon, Delet(nach, n, kol[0]), size[1], n, kol[1]);
   }
 }
+
 void Body(int n) {
   std::vector<int> size(2);
   std::vector<int> kol(2);
@@ -92,6 +96,7 @@ void Body(int n) {
     }
   }
 }
+
 int main() {
   int n;
   std::cin >> n;
