@@ -49,7 +49,7 @@ void GetAns(int n, int k) {
   }
 }
 
-int mainBALLS() {
+int main() {
   int n = 0;
   int k = 0;
   std::cin >> n >> k;
